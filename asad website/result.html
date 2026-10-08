@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/photo_2.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/photo_2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result - Quizz Application</title>
+    <link rel="stylesheet" href="result.css">
+</head>
+<body>
+
+    <main class="result-container">
+        <div class="result-card">
+            <!-- Dynamic Result Trophy / Icon -->
+            <div class="result-icon" id="resultIcon">🏆</div>
+
+            <!-- Greeting & Performance Heading -->
+            <h1 id="resultTitle">Quiz Completed!</h1>
+            <p class="user-greeting">Great effort, <span id="userName">Student</span>!</p>
+
+            <!-- Score Display Box -->
+            <div class="score-box">
+                <div class="score-number">
+                    <span id="userScore">0</span> / <span id="totalQuestions">0</span>
+                </div>
+                <div class="percentage-badge" id="percentageBadge">0%</div>
+            </div>
+
+            <!-- Performance Message -->
+            <p class="performance-message" id="performanceMsg">Analyzing your results...</p>
+
+            <!-- Quick Action Buttons -->
+            <div class="action-buttons">
+                <button id="retryBtn" class="btn primary-btn">🔄 Try Again</button>
+                <button id="homeBtn" class="btn secondary-btn">🏠 Go to Home</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="result.js"></script>
+</body>
+</html>

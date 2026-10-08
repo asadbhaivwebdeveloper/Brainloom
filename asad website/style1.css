@@ -1,0 +1,832 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080c14;
+    --panel: rgba(13, 18, 30, 0.85);
+
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --purple: #a855f7;
+    --cyan: #06b6d4;
+
+    --text: #ffffff;
+    --muted: #94a3b8;
+
+    --border: rgba(255, 255, 255, 0.12);
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: var(--bg);
+
+    color: var(--text);
+
+    font-family: 'Plus Jakarta Sans', sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: default;
+    user-select: none;
+
+    padding: 40px 20px;
+
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/* ==============================
+   TOP NAV
+============================== */
+
+.top-nav {
+    position: fixed;
+
+    top: 24px;
+    right: 24px;
+
+    z-index: 20;
+}
+
+.user-badge {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+
+    padding: 10px 20px;
+
+    border-radius: 30px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.2);
+
+    text-transform: capitalize;
+
+    transition: all 0.3s ease;
+}
+
+.user-badge:hover {
+    background: rgba(99, 102, 241, 0.2);
+
+    border-color:
+        rgba(99, 102, 241, 0.5);
+
+    color: #a5b4fc;
+}
+
+.user-icon {
+    font-size: 14px;
+}
+
+
+/* ==============================
+   BACKGROUND ORBS
+============================== */
+
+.orb {
+    position: fixed;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: 0.45;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    animation:
+        moveOrb 10s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 380px;
+    height: 380px;
+
+    background: #6366f1;
+
+    top: -5%;
+    left: 10%;
+}
+
+.orb-2 {
+    width: 320px;
+    height: 320px;
+
+    background: #a855f7;
+
+    bottom: -5%;
+    right: 10%;
+
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+
+    background: #06b6d4;
+
+    top: 40%;
+    right: 35%;
+
+    animation-delay: -6s;
+}
+
+@keyframes moveOrb {
+
+    0% {
+        transform:
+            translate(0, 0)
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translate(30px, 40px)
+            scale(1.15);
+    }
+
+}
+
+
+/* ==============================
+   MAIN CONTAINER
+============================== */
+
+.welcome-container {
+    width: 100%;
+
+    max-width: 470px;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* ==============================
+   ADS
+============================== */
+
+.ad-section {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 5;
+}
+
+.ad-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 7px;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+.ad-label span {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #64748b;
+
+    opacity: 0.8;
+}
+
+
+/* 468 x 60 */
+
+.ad-banner-section {
+    min-height: 76px;
+}
+
+.ad-banner {
+    width: 468px;
+    height: 60px;
+
+    max-width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.22);
+
+    position: relative;
+}
+
+
+/* 300 x 250 */
+
+.ad-square-section {
+    margin-top: 4px;
+
+    min-height: 277px;
+}
+
+.ad-square {
+    width: 300px;
+    height: 250px;
+
+    max-width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.28);
+
+    position: relative;
+}
+
+
+/* ==============================
+   MAIN CARD
+============================== */
+
+.welcome-card {
+    width: 100%;
+
+    position: relative;
+
+    border-radius: 28px;
+
+    padding: 2px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.03)
+        );
+
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.6);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.welcome-card:hover {
+    transform:
+        translateY(-5px)
+        scale(1.005);
+
+    box-shadow:
+        0 40px 80px
+        rgba(99, 102, 241, 0.25);
+}
+
+.card-border-glow {
+    position: absolute;
+
+    inset: -1px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(99, 102, 241, 0.5),
+            transparent 30%,
+            transparent 70%,
+            rgba(168, 85, 247, 0.4)
+        );
+
+    opacity: 0;
+
+    transition: opacity 0.4s ease;
+
+    pointer-events: none;
+}
+
+.welcome-card:hover .card-border-glow {
+    opacity: 1;
+}
+
+.card-content {
+    background:
+        rgba(13, 18, 30, 0.88);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border-radius: 26px;
+
+    padding:
+        40px 28px 32px 28px;
+
+    text-align: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* ==============================
+   BADGE
+============================== */
+
+.badge {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    background:
+        rgba(99, 102, 241, 0.12);
+
+    border:
+        1px solid rgba(99, 102, 241, 0.35);
+
+    color: #a5b4fc;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    letter-spacing: 0.5px;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+
+    background-color: #38bdf8;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 10px #38bdf8;
+
+    animation:
+        pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+
+}
+
+
+/* ==============================
+   LOGO
+============================== */
+
+.logo-wrapper {
+    margin:
+        10px auto 22px auto;
+
+    width: 90px;
+    height: 90px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-ring {
+    position: absolute;
+
+    inset: -6px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            from 0deg,
+            #6366f1,
+            #a855f7,
+            #06b6d4,
+            #6366f1
+        );
+
+    animation:
+        spinRing 6s linear infinite;
+
+    opacity: 0.8;
+
+    filter: blur(4px);
+}
+
+@keyframes spinRing {
+
+    100% {
+        transform: rotate(360deg);
+    }
+
+}
+
+.brand-logo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    position: relative;
+
+    z-index: 1;
+
+    border:
+        2px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* ==============================
+   TITLE
+============================== */
+
+.portal-title {
+    color: #ffffff;
+
+    font-size: 26px;
+
+    font-weight: 800;
+
+    margin:
+        0 0 6px 0;
+
+    letter-spacing: -0.5px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #cbd5e1
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.portal-subtitle {
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    margin:
+        0 0 28px 0;
+}
+
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.options-grid {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.option-btn {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    padding: 15px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        all 0.3s
+        cubic-bezier(
+            0.4,
+            0,
+            0.2,
+            1
+        );
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.btn-create {
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    color: #f1f5f9;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-create:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    border-color:
+        rgba(255, 255, 255, 0.3);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.3);
+}
+
+.btn-start {
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #4f46e5
+        );
+
+    color: #ffffff;
+
+    border: 1px solid transparent;
+
+    box-shadow:
+        0 6px 20px
+        rgba(99, 102, 241, 0.4);
+}
+
+.btn-start:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #4338ca
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 28px
+        rgba(99, 102, 241, 0.6);
+}
+
+.option-btn:active {
+    transform:
+        translateY(0);
+}
+
+
+/* ==============================
+   LOADING
+============================== */
+
+.option-btn.loading {
+    cursor: wait;
+
+    opacity: 0.75;
+
+    transform: none !important;
+
+    pointer-events: none;
+}
+
+.option-btn.loading .btn-icon {
+    animation:
+        loadingPulse
+        0.8s
+        ease-in-out
+        infinite alternate;
+}
+
+@keyframes loadingPulse {
+
+    from {
+        opacity: 0.4;
+        transform: scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+}
+
+.option-btn:disabled {
+    cursor: wait;
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding:
+            80px 15px 25px;
+    }
+
+    .top-nav {
+        top: 15px;
+        right: 15px;
+    }
+
+    .user-badge {
+        padding:
+            8px 14px;
+
+        font-size: 12px;
+    }
+
+    .welcome-container {
+        max-width: 100%;
+    }
+
+    .card-content {
+        padding:
+            35px 20px 28px 20px;
+    }
+
+    .portal-title {
+        font-size: 23px;
+    }
+
+    .logo-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .ad-banner {
+        width: 100%;
+        max-width: 468px;
+
+        transform-origin: center;
+    }
+
+    .ad-square {
+        width: 300px;
+        max-width: 100%;
+    }
+}
+
+
+/* ==============================
+   VERY SMALL DEVICES
+============================== */
+
+@media (max-width: 360px) {
+
+    body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .card-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .badge {
+        top: 14px;
+        right: 14px;
+    }
+
+    .portal-title {
+        font-size: 21px;
+    }
+
+    .portal-subtitle {
+        font-size: 12px;
+    }
+
+    .option-btn {
+        padding: 13px;
+        font-size: 14px;
+    }
+
+    .ad-banner {
+        transform:
+            scale(0.85);
+
+        margin-top: -4px;
+        margin-bottom: -4px;
+    }
+}

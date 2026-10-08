@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1"
+    >
+
+    <title>Brainloom Quiz Creator</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="create-quiz.css"
+    >
+
+</head>
+
+
+<body>
+
+<main>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">B</div>
+
+        <div class="brand">
+            <b>Brainloom</b>
+            <small>QUIZ CREATOR</small>
+        </div>
+
+        <span class="badge">● Creator mode</span>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <label>✦ CREATE • PUBLISH • SHARE</label>
+
+        <h1>
+            Build a quiz that
+            <em>people remember.</em>
+        </h1>
+
+        <p>
+            Create multiple-choice quizzes,
+            publish them to Brainloom and make
+            them live for one hour.
+        </p>
+
+    </section>
+
+
+    <!-- TOP AD -->
+
+    <section class="ad">
+        <small>SPONSORED</small>
+        <div>
+            Advertisement<br>
+            <span>300 × 250</span>
+        </div>
+    </section>
+
+
+    <!-- MAIN LAYOUT -->
+
+    <section class="layout">
+
+        <!-- LEFT COLUMN -->
+        <div>
+
+            <!-- ==================
+                 AI GENERATOR CARD
+            =================== -->
+
+            <div class="ai-generator">
+
+                <div class="ai-head">
+
+                    <div class="ai-head-left">
+                        <label>✦ AI POWERED</label>
+                        <h2>Generate quiz from image</h2>
+                    </div>
+
+                    <div class="ai-badge">
+                        <span class="ai-badge-dot"></span>
+                        CLAUDE AI
+                    </div>
+
+                </div>
+
+
+                <!-- DROP ZONE -->
+
+                <div class="drop-zone" id="dropZone">
+
+                    <input
+                        type="file"
+                        id="imageFileInput"
+                        accept="image/jpeg,image/png,image/jpg,application/pdf"
+                    >
+
+                    <div class="drop-icon">🖼️</div>
+
+                    <h4>Drag & Drop Your File HERE</h4>
+
+                    <p>Click Here</p>
+
+                    <small>JPEG, PNG ya PDF • Max 10MB</small>
+
+                </div>
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div class="img-preview-wrap" id="imgPreviewWrap">
+                    <img id="imgPreview" src="" alt="Preview">
+                    <button class="img-remove" id="imgRemoveBtn" type="button">×</button>
+                </div>
+
+
+                <!-- CONTROLS -->
+
+                <div class="ai-controls">
+
+                    <div class="ai-field">
+                        <label>Lenght of Questions</label>
+                        <select id="aiQuestionCount">
+                            <option value="3">3 Questions</option>
+                            <option value="5" selected>5 Questions</option>
+                            <option value="7">7 Questions</option>
+                            <option value="10">10 Questions</option>
+                            <option value="15">15 Questions</option>
+                        </select>
+                    </div>
+
+                    <div class="ai-field">
+                        <label>Select Difficulty</label>
+                        <div class="difficulty-pills">
+                            <button class="pill active-easy" data-diff="easy" type="button">Easy</button>
+                            <button class="pill" data-diff="medium" type="button">Medium</button>
+                            <button class="pill" data-diff="hard" type="button">Hard</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- GENERATE BUTTON -->
+
+                <button class="generate-btn" id="generateBtn" type="button">
+                    <span id="generateBtnIcon">✦</span>
+                    <span id="generateBtnText">Ganerate</span>
+                </button>
+
+
+                <!-- PROGRESS -->
+
+                <div class="ai-progress" id="aiProgress">
+                    <div class="ai-progress-bar" id="aiProgressBar"></div>
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="ai-status" id="aiStatus">
+                    <div class="spinner" id="aiSpinner"></div>
+                    <span id="aiStatusText">Ganerating...</span>
+                </div>
+
+            </div>
+
+
+            <!-- ==================
+                 BUILDER CARD
+            =================== -->
+
+            <article class="card builder">
+
+                <div class="head">
+
+                    <div>
+                        <label>QUIZ BUILDER</label>
+                        <h2>Create your quiz</h2>
+                        <p>Enter the details and questions below.</p>
+                    </div>
+
+                    <span class="local">● Local draft</span>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="section">
+                    <b>01</b>
+                    Quiz details
+                </div>
+
+
+                <!-- TITLE -->
+
+                <div class="field">
+                    <label>Quiz title</label>
+                    <input
+                        id="quizTitle"
+                        type="text"
+                        maxlength="100"
+                        placeholder="e.g. JavaScript Fundamentals"
+                    >
+                </div>
+
+
+                <!-- CREATOR NAME -->
+
+                <div class="field">
+                    <label>Creator name</label>
+                    <input
+                        id="creatorName"
+                        type="text"
+                        maxlength="80"
+                        placeholder="e.g. Asad"
+                    >
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="field">
+                    <label>Creator email <i>(optional)</i></label>
+                    <input
+                        id="creatorEmail"
+                        type="email"
+                        maxlength="150"
+                        placeholder="you@example.com"
+                    >
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+                    <label>Quiz password</label>
+                    <input
+                        id="quizPassword"
+                        type="password"
+                        minlength="4"
+                        maxlength="100"
+                        placeholder="Create a password"
+                    >
+                    <small class="field-help">
+                        Minimum 4 characters. Your password is stored as a SHA-256 hash in the quiz file.
+                    </small>
+                </div>
+
+
+                <!-- STRICT SECURITY -->
+
+                <label class="security">
+                    <span>
+                        <strong>Strict security</strong>
+                        <small>Apply stricter quiz-session settings</small>
+                    </span>
+                    <input id="strictSecurity" type="checkbox">
+                    <span class="switch"></span>
+                </label>
+
+
+                <!-- QUESTIONS -->
+
+                <div class="section qhead">
+                    <span>
+                        <b>02</b>
+                        Questions
+                    </span>
+                    <small id="questionCounter">0 Questions</small>
+                </div>
+
+
+                <div id="questionsContainer"></div>
+
+
+                <!-- ADD QUESTION -->
+
+                <button
+                    class="secondary add-question"
+                    id="addQuestionBtn"
+                    type="button"
+                >
+                    ＋ Add question
+                </button>
+
+
+                <!-- BANNER AD -->
+
+                <div class="ad banner">
+                    Advertisement<br>
+                    <span>468 × 60</span>
+                </div>
+
+
+                <!-- PUBLISH -->
+
+                <div class="publish">
+
+                    <div>
+                        <label>READY?</label>
+                        <h3>Publish your quiz</h3>
+                        <p>
+                            Your quiz will be uploaded to
+                            Brainloom and remain live for 1 hour.
+                        </p>
+                    </div>
+
+                    <button id="saveQuizBtn" type="button">
+                        Publish quiz →
+                    </button>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <p id="msg"></p>
+
+
+                <!-- SHARE -->
+
+                <div id="shareBox" class="share hidden">
+
+                    <div class="published-icon">✓</div>
+
+                    <label>PUBLISHED</label>
+
+                    <h3>Your quiz is ready</h3>
+
+                    <p class="expiry">● Live for 1 hour</p>
+
+                    <div class="file-info">
+                        <span>JS file</span>
+                        <strong id="publishedFileName">quiz.js</strong>
+                    </div>
+
+                    <input id="shareLinkInput" readonly>
+
+                    <div class="sharebuttons">
+                        <button class="secondary" id="copyBtn" type="button">Copy link</button>
+                        <button class="secondary" id="downloadBtn" type="button">Download JS</button>
+                        <a id="openQuizBtn" target="_blank" rel="noopener">Open quiz</a>
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- PREVIEW -->
+
+        <aside class="card preview">
+
+            <label>LIVE PREVIEW</label>
+
+            <h3>Quiz summary</h3>
+
+            <div class="brain">🧠</div>
+
+            <h2 id="previewTitle">Your Quiz</h2>
+
+            <p>Ready to be published</p>
+
+            <div class="creator-preview">
+                <span>CREATED BY</span>
+                <strong id="previewCreator">Creator</strong>
+            </div>
+
+            <div class="stats">
+
+                <div>
+                    <b id="previewQuestionCount">0</b>
+                    <small>Questions</small>
+                </div>
+
+                <div>
+                    <b id="previewSecurity">Off</b>
+                    <small>Security</small>
+                </div>
+
+            </div>
+
+            <div class="live-box">
+                <span class="live-dot"></span>
+                <div>
+                    <strong>Live duration</strong>
+                    <small>1 hour after publishing</small>
+                </div>
+            </div>
+
+            <div class="tip">
+                💡Upload your file and gnerate quizz automatically
+            </div>
+
+        </aside>
+
+    </section>
+
+</main>
+
+
+<script src="create-quiz.js"></script>
+
+</body>
+
+</html>

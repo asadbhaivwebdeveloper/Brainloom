@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b14">
+  <meta name="description" content="Brainloom premium online quiz experience.">
+  <title>Brainloom Quiz</title>
+  <link rel="icon" type="image/png" href="images/photo_2.png">
+  <link rel="stylesheet" href="quizzstart.css">
+</head>
+<body class="brainloom-app">
+
+  <!-- DIFFICULTY -->
+  <section id="quizSelectionScreen" class="screen selection-screen">
+    <div class="selection-card">
+      <div class="brand-pill"><span class="brand-dot"></span> BRAINLOOM QUIZ</div>
+
+      <div class="selection-logo">
+        <img src="images/photo_2.png" alt="Brainloom Quiz">
+      </div>
+
+      <div class="hero-kicker">SMART • FAST • PREMIUM</div>
+      <h1>Select Your <span>Difficulty</span></h1>
+      <p class="subtitle">Choose your challenge level and explore a full set of 100 questions in every category.</p>
+
+      <div class="mode-grid">
+        <button class="mode-card easy-mode" data-mode="easy" type="button">
+          <span class="mode-icon">✦</span>
+          <span class="mode-name">Easy</span>
+          <span class="mode-description">Foundation-level questions designed for a smooth learning pace.</span>
+          <span class="mode-count">100 questions per category</span>
+        </button>
+
+        <button class="mode-card normal-mode" data-mode="normal" type="button">
+          <span class="mode-icon">◆</span>
+          <span class="mode-name">Normal</span>
+          <span class="mode-description">Balanced questions for regular practice, revision and confidence.</span>
+          <span class="mode-count">100 questions per category</span>
+        </button>
+
+        <button class="mode-card hard-mode" data-mode="hard" type="button">
+          <span class="mode-icon">▲</span>
+          <span class="mode-name">Hard</span>
+          <span class="mode-description">More advanced questions for a serious knowledge challenge.</span>
+          <span class="mode-count">100 questions per category</span>
+        </button>
+      </div>
+
+      <button id="difficultyContinue" class="primary-btn" type="button" disabled>
+        Continue to Quizzes <span>→</span>
+      </button>
+
+      <div class="trust-row">
+        <span>✓ One-time answers</span>
+        <span>◷ 15 sec / question</span>
+        <span>◆ 4 categories</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCHING -->
+  <section id="searchingScreen" class="screen searching-screen hidden">
+    <div class="searching-card">
+      <div class="loader-ring"></div>
+      <div class="hero-kicker">BRAINLOOM ENGINE</div>
+      <h2>Preparing Your Quiz</h2>
+      <p>Loading <strong id="searchModeText">Normal</strong> difficulty categories.</p>
+      <div class="search-progress"><span></span></div>
+      <small>Curating your question set…</small>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="availableQuizScreen" class="screen available-screen hidden">
+    <div class="available-wrapper">
+      <div class="available-top">
+        <div>
+          <div class="hero-kicker">SELECT CATEGORY</div>
+          <h1>Choose Your <span>Quiz</span></h1>
+          <p>Select a category. Every category contains 100 questions for the selected difficulty.</p>
+        </div>
+        <div class="selected-mode">
+          <small>Selected difficulty</small>
+          <strong id="selectedModeDisplay">Normal</strong>
+          <span>100 questions</span>
+        </div>
+      </div>
+      <div id="quizCategoryGrid" class="quiz-category-grid"></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <main id="quizInterface" class="quiz-container hidden">
+    <div class="quiz-topline">
+      <div>
+        <div class="eyebrow" id="quizCategoryLabel">CATEGORY</div>
+        <h1 id="quizTitle">Quiz</h1>
+      </div>
+      <div class="difficulty-chip" id="quizModeLabel">NORMAL</div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-card correct"><small>Correct</small><strong id="correctCount">0</strong></div>
+      <div class="stat-card wrong"><small>Wrong</small><strong id="wrongCount">0</strong></div>
+      <div class="stat-card timeout"><small>Timed Out</small><strong id="timeoutCount">0</strong></div>
+      <div class="stat-card answered"><small>Answered</small><strong id="answeredCount">0</strong></div>
+    </div>
+
+    <div class="quiz-header">
+      <div class="timer-box">
+        <span class="timer-icon">◷</span>
+        <span>Time Left</span>
+        <strong id="timer">15</strong><span>s</span>
+      </div>
+      <div class="question-progress">
+        <div class="progress-label">
+          <span>Question <b id="currentQ">1</b> of <b id="totalQ">100</b></span>
+          <span id="progressPercent">1%</span>
+        </div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+      </div>
+    </div>
+
+    <div class="one-time-note">
+      <span>✓</span>
+      <div><strong>Your first answer is final.</strong><br><small>Once selected, an answer cannot be changed.</small></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="question-number" id="questionNumber">QUESTION 01</div>
+      <h2 id="questionText">Loading question...</h2>
+      <div id="optionsContainer" class="options-container"></div>
+
+      <div class="quiz-footer">
+        <button id="skipBtn" class="secondary-btn" type="button">Go to Result <span>↗</span></button>
+        <button id="nextBtn" class="primary-btn" type="button" disabled>Next Question <span>→</span></button>
+      </div>
+    </div>
+
+    <div class="security-note">
+      <span>SECURITY</span>
+      <p>Repeated tab switching can submit the quiz automatically. Reloading or closing the page also triggers a browser warning while the quiz is active.</p>
+    </div>
+
+    <div class="ad-container-468"></div>
+    <div class="ad-container-native"></div>
+  </main>
+
+  <div id="quizSecurityWarning" class="security-warning hidden"></div>
+
+<script>
+/* =========================================================
+   BRAINLOOM QUIZ BRIDGE
+   ========================================================= */
+(function () {
+  "use strict";
+
+  const SUPABASE_URL   = "https://uuznigrkiwzjuwkdmakm.supabase.co";
+  const SUPABASE_KEY   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1em5pZ3JraXd6anV3a2RtYWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4NjkxNTcsImV4cCI6MjEwNjQ0NTE1N30.OknmwTS5Djbiee1xEr4GzRjCy2vETT-6P12QsW0iIGo";
+  const STORAGE_BUCKET = "brainloom-quizzes";
+  const TABLE_NAME     = "creator_quizzes";
+
+  /* -------------------------------------------------------
+     SHA-256
+  ------------------------------------------------------- */
+  async function hashPassword(password) {
+    const encoded = new TextEncoder().encode(password);
+    const hash    = await crypto.subtle.digest("SHA-256", encoded);
+    return [...new Uint8Array(hash)]
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  /* -------------------------------------------------------
+     Escape HTML
+  ------------------------------------------------------- */
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /* -------------------------------------------------------
+     Loading Overlay
+  ------------------------------------------------------- */
+  function showLoadingOverlay(message) {
+    const old = document.getElementById("blLoadingOverlay");
+    if (old) old.remove();
+
+    const overlay = document.createElement("div");
+    overlay.id = "blLoadingOverlay";
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:99998;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:18px;
+      background:rgba(3,7,18,.96);color:#fff;
+      font-family:Inter,sans-serif;
+    `;
+    overlay.innerHTML = `
+      <div style="
+        width:52px;height:52px;border-radius:50%;
+        border:4px solid rgba(255,255,255,.08);
+        border-top-color:#8b5cf6;border-right-color:#22d3ee;
+        animation:blSpin .75s linear infinite;
+      "></div>
+      <p style="color:#94a3b8;font-size:14px;">${esc(message)}</p>
+      <style>@keyframes blSpin{to{transform:rotate(360deg)}}</style>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  function hideLoadingOverlay() {
+    const overlay = document.getElementById("blLoadingOverlay");
+    if (overlay) overlay.remove();
+  }
+
+  /* -------------------------------------------------------
+     Password + Name Screen
+  ------------------------------------------------------- */
+  function showCreatorPasswordScreen(quiz, record) {
+    const overlay = document.createElement("div");
+    overlay.id = "creatorQuizOverlay";
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:99999;
+      display:flex;align-items:center;justify-content:center;
+      padding:20px;background:rgba(3,7,18,.95);backdrop-filter:blur(22px);
+    `;
+
+    overlay.innerHTML = `
+      <div style="
+        width:min(500px,100%);padding:38px;
+        border:1px solid rgba(139,92,246,.32);border-radius:28px;
+        background:linear-gradient(145deg,#151c31,#090f1e);
+        box-shadow:0 30px 90px rgba(0,0,0,.55);
+        text-align:center;color:#fff;font-family:Inter,sans-serif;
+      ">
+        <div style="
+          display:inline-flex;padding:8px 13px;border-radius:999px;
+          background:rgba(139,92,246,.10);border:1px solid rgba(139,92,246,.25);
+          font-size:10px;font-weight:800;letter-spacing:.13em;color:#ddd6fe;
+          margin-bottom:18px;
+        ">CREATOR QUIZ</div>
+
+        <h1 style="margin:0 0 8px;font:700 28px 'Space Grotesk',sans-serif;">
+          ${esc(quiz.title)}
+        </h1>
+
+        <p style="color:#94a3b8;margin-bottom:4px;font-size:14px;">
+          By <strong style="color:#c4b5fd;">${esc(quiz.creatorName)}</strong>
+        </p>
+
+        <p style="color:#64748b;font-size:12px;margin-bottom:26px;">
+          ${quiz.questions.length} questions
+          &nbsp;•&nbsp;
+          Expires ${new Date(quiz.expiresAt).toLocaleTimeString()}
+        </p>
+
+        <input id="blNameInput" type="text" placeholder="Your name"
+          maxlength="50" autocomplete="name"
+          style="
+            width:100%;padding:15px 17px;border-radius:14px;
+            border:1px solid rgba(255,255,255,.10);background:#080e1c;
+            color:#fff;outline:none;font-size:15px;margin-bottom:6px;
+            font-family:Inter,sans-serif;
+          ">
+        <p id="blNameError"
+          style="min-height:18px;color:#fb7185;font-size:12px;margin-bottom:10px;">
+        </p>
+
+        <input id="blPassInput" type="password" placeholder="Quiz password"
+          style="
+            width:100%;padding:15px 17px;border-radius:14px;
+            border:1px solid rgba(255,255,255,.10);background:#080e1c;
+            color:#fff;outline:none;font-size:15px;margin-bottom:6px;
+            font-family:Inter,sans-serif;
+          ">
+        <p id="blPassError"
+          style="min-height:18px;color:#fb7185;font-size:12px;margin-bottom:16px;">
+        </p>
+
+        <button id="blStartBtn" type="button" style="
+          width:100%;padding:15px;border:0;border-radius:14px;
+          background:linear-gradient(135deg,#8b5cf6,#22d3ee);
+          color:#fff;font-weight:800;font-size:15px;cursor:pointer;
+          font-family:Inter,sans-serif;
+        ">Start Quiz →</button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const nameInput = overlay.querySelector("#blNameInput");
+    const passInput = overlay.querySelector("#blPassInput");
+    const nameError = overlay.querySelector("#blNameError");
+    const passError = overlay.querySelector("#blPassError");
+    const startBtn  = overlay.querySelector("#blStartBtn");
+
+    async function tryStart() {
+      nameError.textContent = "";
+      passError.textContent = "";
+
+      const name = nameInput.value.trim();
+      const pass = passInput.value;
+
+      if (name.length < 2) {
+        nameError.textContent = "Please enter your name.";
+        nameInput.focus();
+        return;
+      }
+
+      if (pass.length < 1) {
+        passError.textContent = "Please enter the quiz password.";
+        passInput.focus();
+        return;
+      }
+
+      startBtn.textContent = "Verifying...";
+      startBtn.disabled    = true;
+
+      const hash = await hashPassword(pass);
+
+      if (hash !== record.password_hash) {
+        passError.textContent = "Incorrect password. Please try again.";
+        startBtn.textContent  = "Start Quiz →";
+        startBtn.disabled     = false;
+        passInput.value       = "";
+        passInput.focus();
+        return;
+      }
+
+      localStorage.setItem("quizParticipantName", name);
+      localStorage.setItem("userName",            name);
+      localStorage.setItem("nameInput",           name);
+
+      overlay.remove();
+
+      window.dispatchEvent(
+        new CustomEvent("brainloomCreatorQuizReady", {
+          detail: {
+            ...quiz,
+            strictSecurity: record.strict_security
+          }
+        })
+      );
+    }
+
+    startBtn.addEventListener("click", tryStart);
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") tryStart(); });
+    passInput.addEventListener("keydown", e => { if (e.key === "Enter") tryStart(); });
+    setTimeout(() => nameInput.focus(), 80);
+  }
+
+  /* -------------------------------------------------------
+     Load Creator Quiz from Supabase
+  ------------------------------------------------------- */
+  async function loadCreatorQuiz(creatorQuizId) {
+    showLoadingOverlay("Loading quiz…");
+
+    try {
+      /* Step 1: DB record */
+      const dbRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/${TABLE_NAME}` +
+        `?quiz_id=eq.${encodeURIComponent(creatorQuizId)}` +
+        `&select=storage_path,expires_at,password_hash,strict_security`,
+        {
+          headers: {
+            "apikey":        SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
+          }
+        }
+      );
+
+      if (!dbRes.ok) throw new Error(`Database error (${dbRes.status})`);
+
+      const rows = await dbRes.json();
+
+      if (!rows || !rows.length) {
+        hideLoadingOverlay();
+        alert("Quiz not found. The link may be invalid.");
+        return;
+      }
+
+      const record = rows[0];
+
+      /* Step 2: Expiry check */
+      if (new Date() > new Date(record.expires_at)) {
+        hideLoadingOverlay();
+        alert("This quiz has expired. Please ask the creator to publish a new one.");
+        return;
+      }
+
+      /* Step 3: Storage se JS file */
+      const encodedPath = record.storage_path
+        .split("/")
+        .map(part => encodeURIComponent(part))
+        .join("/");
+
+      const fileRes = await fetch(
+        `${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${encodedPath}`,
+        {
+          headers: {
+            "apikey":        SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
+          }
+        }
+      );
+
+      if (!fileRes.ok) throw new Error(`File not found (${fileRes.status})`);
+
+      const jsText = await fileRes.text();
+
+      /* Step 4: JS execute */
+      const blob    = new Blob([jsText], { type: "application/javascript" });
+      const blobURL = URL.createObjectURL(blob);
+      const script  = document.createElement("script");
+      script.src    = blobURL;
+
+      script.onload = function () {
+        URL.revokeObjectURL(blobURL);
+        hideLoadingOverlay();
+
+        const quiz = window.BRAINLOOM_CREATOR_QUIZ;
+        if (!quiz || !Array.isArray(quiz.questions) || !quiz.questions.length) {
+          alert("Quiz data is invalid or empty.");
+          return;
+        }
+
+        showCreatorPasswordScreen(quiz, record);
+      };
+
+      script.onerror = function () {
+        URL.revokeObjectURL(blobURL);
+        hideLoadingOverlay();
+        alert("Failed to load quiz file.");
+      };
+
+      document.head.appendChild(script);
+
+    } catch (err) {
+      hideLoadingOverlay();
+      console.error("Creator quiz load error:", err);
+      alert("Could not load quiz: " + err.message);
+    }
+  }
+
+  /* -------------------------------------------------------
+     Main — URL params check
+  ------------------------------------------------------- */
+  try {
+    const params = new URLSearchParams(window.location.search);
+
+    /* Creator quiz — FIX: quizzstart.html */
+    const creatorQuizId = params.get("creatorQuiz");
+    if (creatorQuizId) {
+      loadCreatorQuiz(creatorQuizId);
+      return;
+    }
+
+    /* Encoded ?quiz= param */
+    const encoded = params.get("quiz");
+    if (!encoded) return;
+
+    const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
+    const binary = atob(padded);
+    const bytes  = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+    const payload = JSON.parse(new TextDecoder().decode(bytes));
+    if (!payload || !Array.isArray(payload.questions) || !payload.questions.length) return;
+
+    const id = payload.id || (Date.now() + "_" + Math.random().toString(36).slice(2));
+    localStorage.setItem("brainloom_quiz_" + id, JSON.stringify(payload));
+
+    const next = new URL(window.location.href);
+    next.searchParams.delete("quiz");
+    next.searchParams.set("quizId", id);
+    window.history.replaceState({}, "", next.toString());
+
+  } catch (error) {
+    console.error("Brainloom quiz link decode failed:", error);
+  }
+
+})();
+</script>
+
+<script src="js/questions.js"></script>
+<script src="js/quizzstart.js"></script>
+</body>
+</html>
